@@ -1,9 +1,11 @@
 import express from "express"
 const router = express.Router();
-import { registerController } from "../controllers";
+import { loginController, registerController } from "../controllers";
 
 
 router.post("/register", registerController.register)
+router.post("/login", loginController.login)
+
 
 
 

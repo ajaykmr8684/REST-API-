@@ -11,6 +11,10 @@ class CustomErrorHandler extends Error {
         return new CustomErrorHandler(409, message);
     }
 
+    static wrongCredentials(message = 'Wrong Email or Password!'){
+        return new CustomErrorHandler(401, message);
+    }
+
 }
 
 export default CustomErrorHandler;
