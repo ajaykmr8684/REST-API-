@@ -10,7 +10,7 @@ mongoose.connect(DB_URL)
     console.log("Database Connected.")
 })
 .catch((e) => {
-    console.log(`Oops, Mongo died. Issue: ${e}`)
+    console.log(`Oops, Mongo died. Error: ${e}`)
 })
 
 app.use(express.json());
