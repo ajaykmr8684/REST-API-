@@ -4,8 +4,6 @@ import CustomErrorHandler from "../../services/CustomErrorHandler";
 const userController = {
     async me(req, res, next) {
 
-        const authHeader = req.headers.authorization;
-
         try {
 
             const user = await User.findOne({_id: req.user._id}).select("-password -__v -updatedAt");
