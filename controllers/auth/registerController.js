@@ -3,7 +3,7 @@ import { RefreshToken, User } from "../../models";
 import CustomErrorHandler from "../../services/CustomErrorHandler";
 import bcrypt from "bcrypt"
 import JwtService from "../../services/JwtService";
-import { REFRESH_TOKEN } from "../../config";
+import { REFRESH_SECRET } from "../../config";
 
 const registerController = {
     async register(req, res, next){
@@ -50,7 +50,7 @@ const registerController = {
             const result = await user.save()
             //we have to send json token to user
             access_token = JwtService.sign({_id: result._id, role: result.role})
-            refresh_token = JwtService.sign({_id: result._id, role: result.role}, '1y', REFRESH_TOKEN)
+            refresh_token = JwtService.sign({_id: result._id, role: result.role}, '1y', REFRESH_SECRET)
 
             //data whitelist
             await RefreshToken.create({token: refresh_token})

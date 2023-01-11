@@ -3,7 +3,7 @@ import { User, RefreshToken } from "../../models";
 import CustomErrorHandler from "../../services/CustomErrorHandler";
 import bcrypt from "bcrypt"
 import JwtService from "../../services/JwtService";
-import { REFRESH_TOKEN } from "../../config";
+import { REFRESH_SECRET } from "../../config";
 
 const loginController = {
      async login(req, res, next){
@@ -33,7 +33,7 @@ const loginController = {
             }
 
             const access_token =  JwtService.sign({_id: user._id, role: user.role})
-            const refresh_token = JwtService.sign({_id: user._id, role: user.role}, '1y', REFRESH_TOKEN)
+            const refresh_token = JwtService.sign({_id: user._id, role: user.role}, '1y', REFRESH_SECRET)
             
              //data whitelist
              await RefreshToken.create({token: refresh_token})
@@ -42,6 +42,29 @@ const loginController = {
             return next(error);
         }
 
+    },
+
+    async logout(req, res, next){
+
+        //validation
+        const refreshSchema = Joi.object({
+            refresh_token: Joi.string().required()
+        })
+
+        const {error} = refreshSchema.validate(req.body);
+
+        if(error){
+            return next(error);
+        }
+        try { 
+
+            await RefreshToken.deleteOne({token: req.body.refresh_token})
+
+        } catch (error) {
+            return next(error);
+        }
+
+        res.json({status : 1})
     }
 }
 

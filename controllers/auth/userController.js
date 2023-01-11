@@ -17,12 +17,6 @@ const userController = {
             return next(error);
         }
 
-
-
-
-
-
-
     }
 }
 
