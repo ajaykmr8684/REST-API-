@@ -4,6 +4,7 @@ import errorHandler from "./middlewares/errorHandler";
 const app = express();
 import routes from "./routes"
 import mongoose from "mongoose"
+import path from "path"
 
 mongoose.connect(DB_URL)
 .then(() => {
@@ -13,6 +14,9 @@ mongoose.connect(DB_URL)
     console.log(`Oops, Mongo died. Issue: ${e}`)
 })
 
+global.appRoot = path.resolve(__dirname);
+
+app.use(express.urlencoded({extended: false}))
 app.use(express.json());
 app.use("/api", routes);
 app.use(errorHandler)
