@@ -14,21 +14,14 @@ mongoose.connect(DB_URL)
     console.log(`Oops, Mongo died. Issue: ${e}`)
 })
 
+//Global Variable
 global.appRoot = path.resolve(__dirname);
 
 app.use(express.urlencoded({extended: false}))
 app.use(express.json());
 app.use("/api", routes);
+app.use("/uploads", express.static("uploads"))
 app.use(errorHandler)
-
-
-
-
-
-
-
-
-
 
 //Listener
 app.listen(APP_PORT, () => console.log(`App is listening on port ${APP_PORT}.`))
